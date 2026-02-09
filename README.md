@@ -84,4 +84,4 @@ Environment variables:
 
 This project is licensed under the [GNU Affero General Public License v3.0](https://www.gnu.org/licenses/agpl-3.0.html) (AGPL-3.0), as required by the PyMuPDF dependency.
 
-**What this means:** If you modify this service and make it available over a network, you must make the modified source code available under the same license. Services that communicate with docparse over the newrok are **not** affected — only modifications to docparse itself.
+**What this means:** If you modify this service and make it available over a network, you must make the modified source code available under the same license. Services that communicate with docparse over the network are **not** affected — only modifications to docparse itself.
