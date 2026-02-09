@@ -16,11 +16,11 @@ RUN uv pip install --system --no-cache -r requirements.txt
 COPY app/ app/
 
 ENV PYTHONUNBUFFERED=1 APP_VERSION=$VERSION
-ENV PORT=8800
+ENV PORT=12330
 ENV WORKERS=1
 ENV LOG_LEVEL=info
 ENV MAX_FILE_SIZE_MB=50
 
-EXPOSE 8800
+EXPOSE 12330
 
 CMD ["python", "-m", "app.main"]

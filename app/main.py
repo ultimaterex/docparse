@@ -47,7 +47,7 @@ app = FastAPI(
 )
 
 
-MAX_FILE_SIZE = int(os.getenv("MAX_FILE_SIZE_MB", "50")) * 1024 * 1024  # default 50MB
+MAX_FILE_SIZE = int(os.getenv("MAX_FILE_SIZE_MB", "50")) * 1024 * 1024  # default 50 MB
 
 
 async def _read_upload(file: UploadFile) -> tuple[bytes, str]:
@@ -177,7 +177,7 @@ async def health():
 
 
 if __name__ == "__main__":
-    port = int(os.getenv("PORT", "8800"))
+    port = int(os.getenv("PORT", "12330"))
     workers = int(os.getenv("WORKERS", "1"))
     
     uvicorn.run(

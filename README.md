@@ -16,7 +16,7 @@ docparse wraps PyMuPDF in a thin FastAPI service so it can be used as a sidecar 
 docker compose up -d
 ```
 
-The service will be available at `http://localhost:8800`. Visit `http://localhost:8800/docs` for the interactive API docs.
+The service will be available at `http://localhost:12330`. Visit `http://localhost:12330/docs` for the interactive API docs.
 
 ### Local
 
@@ -32,7 +32,7 @@ python -m app.main
 Upload a PDF and get back text, tables, image metadata, and scanned page detection per page.
 
 ```bash
-curl -X POST http://localhost:8800/extract \
+curl -X POST http://localhost:12330/extract \
   -F "file=@document.pdf" \
   -F "extract_tables=true" \
   -F "layout_mode=true"
@@ -50,7 +50,7 @@ curl -X POST http://localhost:8800/extract \
 Lightweight endpoint returning just the extracted text.
 
 ```bash
-curl -X POST http://localhost:8800/extract/text \
+curl -X POST http://localhost:12330/extract/text \
   -F "file=@document.pdf"
 ```
 
@@ -59,14 +59,14 @@ curl -X POST http://localhost:8800/extract/text \
 Extract only the detected tables as structured data and markdown.
 
 ```bash
-curl -X POST http://localhost:8800/extract/tables \
+curl -X POST http://localhost:12330/extract/tables \
   -F "file=@document.pdf"
 ```
 
 ### `GET /health` — Health check
 
 ```bash
-curl http://localhost:8800/health
+curl http://localhost:12330/health
 ```
 
 ## Configuration
@@ -75,7 +75,7 @@ Environment variables:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `PORT` | `8800` | Server port |
+| `PORT` | `12330` | Server port |
 | `WORKERS` | `1` | Number of uvicorn workers |
 | `LOG_LEVEL` | `info` | Logging level |
 | `MAX_FILE_SIZE_MB` | `50` | Maximum upload file size in MB |
