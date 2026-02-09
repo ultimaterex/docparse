@@ -32,6 +32,17 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+class _HealthCheckFilter(logging.Filter):
+    """Suppress noisy health-check access-log lines."""
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        msg = record.getMessage()
+        return "/v1/health" not in msg
+
+
+logging.getLogger("uvicorn.access").addFilter(_HealthCheckFilter())
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info(f"docparse v{__version__} starting (PyMuPDF {pymupdf.VersionBind})")
