@@ -22,8 +22,7 @@ from app.models import (
     HealthResponse,
 )
 from app.extraction import extract_full, extract_text_only, extract_tables_only
-
-__version__ = "0.1.0"
+from app.version import __version__
 
 log_level = os.getenv("LOG_LEVEL", "info").upper()
 logging.basicConfig(
