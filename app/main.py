@@ -23,6 +23,7 @@ from app.models import (
 )
 from app.extraction import extract_full, extract_text_only, extract_tables_only
 from app.version import __version__
+from app.banner import display_startup_banner
 
 log_level = os.getenv("LOG_LEVEL", "info").upper()
 logging.basicConfig(
@@ -45,7 +46,10 @@ logging.getLogger("uvicorn.access").addFilter(_HealthCheckFilter())
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.info(f"docparse v{__version__} starting (PyMuPDF {pymupdf.VersionBind})")
+    port = int(os.getenv("PORT", "12330"))
+    workers = int(os.getenv("WORKERS", "1"))
+    display_startup_banner(port=port, workers=workers)
+    logger.info(f"docparse v{__version__} ready (PyMuPDF {pymupdf.VersionBind})")
     yield
     logger.info("docparse shutting down")
 
@@ -193,6 +197,7 @@ app.include_router(router)
 
 
 if __name__ == "__main__":
+    # Prefer using run.py at the project root instead.
     port = int(os.getenv("PORT", "12330"))
     workers = int(os.getenv("WORKERS", "1"))
     
