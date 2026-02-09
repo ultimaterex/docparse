@@ -13,7 +13,7 @@ from contextlib import asynccontextmanager
 
 import pymupdf
 import uvicorn
-from fastapi import FastAPI, File, Form, UploadFile, HTTPException
+from fastapi import APIRouter, FastAPI, File, Form, UploadFile, HTTPException
 
 from app.models import (
     ExtractionResponse,
@@ -49,6 +49,8 @@ app = FastAPI(
 
 MAX_FILE_SIZE = int(os.getenv("MAX_FILE_SIZE_MB", "50")) * 1024 * 1024  # default 50 MB
 
+router = APIRouter(prefix="/v1")
+
 
 async def _read_upload(file: UploadFile) -> tuple[bytes, str]:
     """Read and validate an uploaded file."""
@@ -72,7 +74,7 @@ async def _read_upload(file: UploadFile) -> tuple[bytes, str]:
     return content, filename
 
 
-@app.post("/extract", response_model=ExtractionResponse)
+@router.post("/extract", response_model=ExtractionResponse)
 async def extract(
     file: UploadFile = File(...),
     extract_tables: bool = Form(default=True),
@@ -112,7 +114,7 @@ async def extract(
     return result
 
 
-@app.post("/extract/text", response_model=TextExtractionResponse)
+@router.post("/extract/text", response_model=TextExtractionResponse)
 async def extract_text(
     file: UploadFile = File(...),
     layout_mode: bool = Form(default=True),
@@ -140,7 +142,7 @@ async def extract_text(
     return result
 
 
-@app.post("/extract/tables", response_model=TableExtractionResponse)
+@router.post("/extract/tables", response_model=TableExtractionResponse)
 async def extract_tables_endpoint(
     file: UploadFile = File(...),
     page_range: str = Form(default=None),
@@ -166,7 +168,7 @@ async def extract_tables_endpoint(
     return result
 
 
-@app.get("/health", response_model=HealthResponse)
+@router.get("/health", response_model=HealthResponse)
 async def health():
     """Health check endpoint."""
     return HealthResponse(
@@ -174,6 +176,9 @@ async def health():
         version=__version__,
         pymupdf_version=pymupdf.VersionBind,
     )
+
+
+app.include_router(router)
 
 
 if __name__ == "__main__":

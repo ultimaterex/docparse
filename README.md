@@ -27,12 +27,14 @@ python -m app.main
 
 ## API
 
-### `POST /extract` — Full extraction
+All endpoints are served under the `/v1` prefix.
+
+### `POST /v1/extract` — Full extraction
 
 Upload a PDF and get back text, tables, image metadata, and scanned page detection per page.
 
 ```bash
-curl -X POST http://localhost:12330/extract \
+curl -X POST http://localhost:12330/v1/extract \
   -F "file=@document.pdf" \
   -F "extract_tables=true" \
   -F "layout_mode=true"
@@ -45,28 +47,28 @@ curl -X POST http://localhost:12330/extract \
 - `layout_mode` (bool, default: `true`) — Preserve spatial layout in text extraction
 - `page_range` (string, optional) — Pages to extract, e.g. `"0-5"` or `"0,2,4"`
 
-### `POST /extract/text` — Text only
+### `POST /v1/extract/text` — Text only
 
 Lightweight endpoint returning just the extracted text.
 
 ```bash
-curl -X POST http://localhost:12330/extract/text \
+curl -X POST http://localhost:12330/v1/extract/text \
   -F "file=@document.pdf"
 ```
 
-### `POST /extract/tables` — Tables only
+### `POST /v1/extract/tables` — Tables only
 
 Extract only the detected tables as structured data and markdown.
 
 ```bash
-curl -X POST http://localhost:12330/extract/tables \
+curl -X POST http://localhost:12330/v1/extract/tables \
   -F "file=@document.pdf"
 ```
 
-### `GET /health` — Health check
+### `GET /v1/health` — Health check
 
 ```bash
-curl http://localhost:12330/health
+curl http://localhost:12330/v1/health
 ```
 
 ## Configuration
