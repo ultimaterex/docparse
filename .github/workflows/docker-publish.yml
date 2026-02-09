@@ -2,11 +2,11 @@ name: Docker Build and Publish
 
 on:
   push:
-    branches: ["main"]
+    branches: ["master"]
     paths-ignore:
       - "**.md"
   pull_request:
-    branches: ["main"]
+    branches: ["master"]
     paths-ignore:
       - "**.md"
   workflow_dispatch:
@@ -59,8 +59,8 @@ jobs:
           tags: |
             type=raw,value=${{ steps.shortsha.outputs.sha }}
             type=ref,event=pr
-            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' && github.event_name != 'pull_request' }}
-            type=raw,value=${{ steps.app_version.outputs.version }},enable=${{ github.ref == 'refs/heads/main' && github.event_name != 'pull_request' }}
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/master' && github.event_name != 'pull_request' }}
+            type=raw,value=${{ steps.app_version.outputs.version }},enable=${{ github.ref == 'refs/heads/master' && github.event_name != 'pull_request' }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
